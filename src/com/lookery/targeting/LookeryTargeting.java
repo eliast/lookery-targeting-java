@@ -29,6 +29,7 @@ public class LookeryTargeting {
     
     private static final String API_VERSION = "2";
     private static final String BASE_URL = "http://services.lookery.com/targeting?";
+    private static final String ENCODING_PREFIX = "LookeryTargeting";
 
     private String apiKey;
     private String secretKey;
@@ -45,7 +46,8 @@ public class LookeryTargeting {
     
     public String redirect(String url, Map<String, String> params) {
         String time = Integer.toString((int) (System.currentTimeMillis() / 1000));
-        String encSignature = encode(secretKey, time, true);
+        String data = ENCODING_PREFIX + API_VERSION + time;
+        String encSignature = encode(secretKey, data, true);
         StringBuffer requestUrl = new StringBuffer(BASE_URL);
         requestUrl.append("v=").append(API_VERSION);
         requestUrl.append("&api_key=").append(apiKey);
